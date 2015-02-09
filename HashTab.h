@@ -5,34 +5,46 @@
 #include <cmath>
 
 typedef struct HashData{
-	int key;
+	long key;
 	struct HashData *next;
-	int data;
+	long data;
 } HashD;
 
 class HashTab {
 
 private:
-	int size;
-	int r;
-	HashD *hashD;	
-	int hashFunction(int key);
+	long size;
+	long r;
+	HashD **hashD;	
+	long hashFunction(long key);
+	void freeLink(HashD *);
 
 public:
-	HashTab(int _r) :r(_r)
-	{
+	HashTab(long _r) :r(_r) {
 		size = pow(2, r);
-		hashD = new HashD[size];
+		hashD = new HashD*[size];
 	}
 
-	~HashTab()
-	{
+	~HashTab() {
+		for(long i=0;i<size;++i) 
+			freeLink(hashD[i]->next);
 		delete []hashD;
 	}
 
-	int search(int key);
-	bool insert(int key, int data);
-	bool remove(int key);	
+	long search(long key);
+	bool insert(long key, long data);
+	bool remove(long key);	
 };
+
+inline long HashTab::hashFunction(long key) {
+	static const long W = 32;
+	static const long A = 0x9E3579B9;
+	static const long F = 0x100000000;
+	long result;
+	result = key * A % (F) >> (W - r);
+	std::cout << result << "\t";
+	return result;
+}
+
 
 #endif

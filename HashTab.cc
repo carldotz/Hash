@@ -1,27 +1,92 @@
+#include <cmath>
 #include "HashTab.h"
 
-int HashTab::search(int key) {
+using std::cout;
+using std::endl;
 
-	return key;
-}
+long HashTab::search(long key) {
+	long position = hashFunction(key);
+	
+	HashD * currentHashD = *(hashD + position);
 
-bool HashTab::insert(int key, int data) {
-	long point = hashFunction(key);
-	hashD[point].key = key;
-	hashD[point].data = data;
-	hashD[point].next = NULL;
-	return true;
-}
+	while(currentHashD != NULL) {
+		if(currentHashD->key == key) {
+			return currentHashD->data;
+		}
+		currentHashD = currentHashD->next;
+	}
 
-bool HashTab::remove(int key) {
+	cout << "Have Not found " << key << endl;
 
-	return true;
-}
-
-int HashTab::hashFunction(int key) {
-	static const int W = 64;
-	static const long A = (2^W) * 0.6180339887;
-	int result;
-	result = key * A % (2^W) >> (W - r);
 	return 0;
 }
+
+//TODO remove
+
+bool HashTab::remove(long key) {
+	long position = hashFunction(key);
+	
+	HashD * currentHashD = *(hashD + position);
+	HashD * preHashD = *(hashD + position);
+
+	while(currentHashD != NULL) {
+		if(currentHashD->key == key) {
+			if(currentHashD == preHashD) {
+				hashD[position] = currentHashD->next;
+			} else {
+				preHashD->next = currentHashD->next;
+			}
+			delete currentHashD;
+			return true;
+		}
+		currentHashD = currentHashD->next;
+	}
+
+	cout << "Have Not found " << key << endl;
+
+	return false;
+}
+
+bool HashTab::insert(long key, long data) {
+	
+	long position = hashFunction(key);
+
+	HashD * currentHashD = *(hashD + position);
+
+	if(currentHashD == NULL) {
+
+			hashD[position] = new HashD;
+			hashD[position]->key = key;
+			hashD[position]->data = data;
+			hashD[position]->next = NULL;
+
+	} else {
+
+		while(currentHashD->next != NULL) {
+			if(currentHashD->key == key) {
+				cout << "Insert Error: Key=" << 
+						key << endl;
+				return false;
+			}
+			currentHashD = currentHashD->next;
+		}
+		currentHashD->next = new HashD;
+		currentHashD = currentHashD->next;
+		currentHashD->key = key;
+		currentHashD->data = data;
+		currentHashD->next = NULL;
+	}
+	
+
+
+	return true;
+}
+
+void HashTab::freeLink(HashD *point) {
+	
+	if(point != NULL) {
+		freeLink(point->next);
+	}
+	delete point;
+}
+
