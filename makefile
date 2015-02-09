@@ -1,3 +1,9 @@
+
+CC = g++
+
+CXXFLAGS = -g 
+LDFLAGS = -g
+
 HashTab:main.o HashTab.o
 
 .PHONY:clean
