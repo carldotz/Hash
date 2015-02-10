@@ -26,5 +26,7 @@
 *.exe
 *.out
 *.app
-
 HashTab
+
+# swp
+*.swp

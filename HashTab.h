@@ -40,10 +40,8 @@ inline long HashTab::hashFunction(long key) {
 	static const long W = 32;
 	static const long A = 0x9E3579B9;
 	static const long F = 0x100000000;
-	long result;
-	result = key * A % (F) >> (W - r);
-	std::cout << result << "\t";
-	return result;
+	//cout << (key * A % (F) >> (W - r)) << endl;;
+	return key * A % (F) >> (W - r);
 }
 
 

@@ -39,6 +39,7 @@ bool HashTab::remove(long key) {
 			delete currentHashD;
 			return true;
 		}
+		preHashD = currentHashD;
 		currentHashD = currentHashD->next;
 	}
 
