@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 
 int main() {
-	HashTab ht(10);
+	HashTab<int> ht(10);
 
 	cout << "\n********Insert*******" << endl;
 	

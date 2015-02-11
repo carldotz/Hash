@@ -30,3 +30,6 @@ HashTab
 
 # swp
 *.swp
+
+# Debug
+HashTab.dSYM

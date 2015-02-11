@@ -4,11 +4,11 @@ CC = g++
 CXXFLAGS = -g 
 LDFLAGS = -g
 
-HashTab:main.o HashTab.o
-main.o:HashTab.h
-HashTab.o:HashTab.h
+HashTab:main.cc HashTab.h
+	$(CC) $(CXXFLAGS) -o HashTab main.cc
 
 .PHONY:clean
 clean:
-	rm *.o
-	rm HashTab
+	@rm -f *.o
+	@rm -f HashTab
+	@rm -rf HashTab.dSYM
